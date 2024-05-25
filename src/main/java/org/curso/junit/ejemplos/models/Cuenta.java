@@ -2,12 +2,15 @@ package org.curso.junit.ejemplos.models;
 
 import java.math.BigDecimal;
 
+import org.curso.junit.ejemplos.exception.DineroInsuficienteException;
+
 public class Cuenta {
 	
 	private String persona;
 	
 	private BigDecimal saldo;
 	
+	private Banco banco;
 	
 	
 	public Cuenta() {
@@ -48,8 +51,25 @@ public class Cuenta {
 
 
 	
+	public Banco getBanco() {
+		return banco;
+	}
+
+
+
+	public void setBanco(Banco banco) {
+		this.banco = banco;
+	}
+
+
+
 	public void debito(BigDecimal monto) {
-		this.saldo=this.saldo.subtract(monto);
+		BigDecimal nuevoSaldo=this.saldo.subtract(monto);
+		if(nuevoSaldo.compareTo(BigDecimal.ZERO)<0) {
+			throw new DineroInsuficienteException("Dinero Insuficiente");
+		}else {
+			this.saldo=nuevoSaldo;
+		}
 	}
 	
     public void credito(BigDecimal monto) {
