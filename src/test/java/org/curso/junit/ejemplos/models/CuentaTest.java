@@ -81,18 +81,27 @@ public class CuentaTest {
 		BFA.AgregarCuenta(cuenta2);
 		BFA.setNombre("Banco de Fomento Agropecuario");
 		BFA.transferir(cuenta1, cuenta2, new BigDecimal(1000));
-		Assertions.assertEquals(1500, cuenta1.getSaldo().intValue());
-		Assertions.assertEquals(2000, cuenta2.getSaldo().intValue());
-		
-		Assertions.assertEquals(2, BFA.getCuentas().size());
-		Assertions.assertEquals("Banco de Fomento Agropecuario",cuenta1.getBanco().getNombre());
-		Assertions.assertEquals("Mathew", BFA.getCuentas().stream()
-				.filter(c ->c.getPersona().equals("Mathew"))
-				.findFirst().get().getPersona());
-		
-		Assertions.assertTrue(BFA.getCuentas().stream()
-				.anyMatch(c ->c.getPersona().equals("Mathew")));
+		Assertions.assertAll(()->{
+			Assertions.assertEquals(1500, cuenta1.getSaldo().intValue());
+		},()->{
+			Assertions.assertEquals(2000, cuenta2.getSaldo().intValue());
+		},()->{
+			Assertions.assertEquals(2, BFA.getCuentas().size());
+		},()->{
+			Assertions.assertEquals("Banco de Fomento Agropecuario",cuenta1.getBanco().getNombre());
+			
+		},()->{
+			Assertions.assertEquals("Mathew", BFA.getCuentas().stream()
+					.filter(c ->c.getPersona().equals("Mathew"))
+					.findFirst().get().getPersona());
+		},()->{
+			Assertions.assertTrue(BFA.getCuentas().stream()
+					.anyMatch(c ->c.getPersona().equals("Mathew")));
+		});
 	}
+	
+	
+	
 	
 	
 	
